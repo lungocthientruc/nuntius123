@@ -4,10 +4,13 @@ package com.ttcnpm.nuntius;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 
 /**
@@ -15,7 +18,7 @@ import android.view.ViewGroup;
  */
 public class UsersFragment extends Fragment {
 
-
+    RecyclerView recyclerView;
     public UsersFragment() {
         // Required empty public constructor
     }
@@ -25,7 +28,12 @@ public class UsersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_users, container, false);
+        View view = inflater.inflate(R.layout.fragment_users, container, false);
+
+        recyclerView = view.findViewById(R.id.users_recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        return view;
     }
 
 }
