@@ -70,7 +70,7 @@ public class UsersFragment extends Fragment {
                         userList.add(modelUsers);
                     }
 
-                    adapterUsers = new AdapterUsers(getActivity(), userList);
+                    adapterUsers = new AdapterUsers();
                     recyclerView.setAdapter(adapterUsers);
                 }
             }
