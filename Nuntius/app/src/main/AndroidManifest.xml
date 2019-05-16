@@ -20,7 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity"
+             android:theme="@style/AppTheme.DarkActionBar"
+                >
+        </activity>
         <activity
             android:name=".dashboard"
             android:label="Nuntius"

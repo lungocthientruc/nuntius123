@@ -53,7 +53,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
         String message = chatList.get(i).getMessage();
         String time = chatList.get(i).getTime();
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        String dateTime = DateFormat.format("dd/MM/yyyy hh:mm aa",cal).toString();
+        String dateTime = DateFormat.format("dd/MM/yyyy hh:mm ",cal).toString();
 
         myholder.messageTv.setText(message);
         myholder.timeTv.setText(dateTime);
