@@ -20,6 +20,11 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
     Context context;
     List<ModelUsers> userList;
 
+    public AdapterUsers(Context context, List<ModelUsers> userList){
+        this.context = context;
+        this.userList = userList;
+    }
+
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -58,6 +63,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
 
     @Override
     public int getItemCount() {
+
         return userList.size();
     }
 
