@@ -146,7 +146,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        })
+        });
     }
 
     private void readMessage() {
@@ -174,7 +174,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
             }
-        })
+        });
     }
 
     private void sendMessage(String message){
