@@ -2,19 +2,20 @@ package com.ttcnpm.nuntius;
 
 public class ModelUsers {
 
-    String name, email,  search, phone, image, cover;
+    String name, email,  search, phone, image, cover, uid;
 
     public ModelUsers(){
 
     }
 
-    public ModelUsers(String name, String email, String search, String phone, String image, String cover) {
+    public ModelUsers(String name, String email, String search, String phone, String image, String cover, String uid) {
         this.name = name;
         this.email = email;
         this.search = search;
         this.phone = phone;
         this.image = image;
         this.cover = cover;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -63,5 +64,13 @@ public class ModelUsers {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
