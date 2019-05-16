@@ -45,6 +45,5 @@
         android:id="@+id/isSeenTv"
         android:gravity="end"
         android:textAlignment="textEnd"
-        android:visibility="gone"
         android:text="Đã gửi"/>
 </LinearLayout>
