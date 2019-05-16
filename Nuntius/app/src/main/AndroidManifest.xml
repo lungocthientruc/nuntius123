@@ -23,7 +23,7 @@
         <activity android:name=".ChatActivity"></activity>
         <activity
             android:name=".dashboard"
-            android:label="@string/title_activity_dashboard"
+            android:label="Nuntius"
             android:theme="@style/AppTheme" />
         <activity android:name=".Forgot_Password_Screen" />
         <activity android:name=".Splash_Screen">

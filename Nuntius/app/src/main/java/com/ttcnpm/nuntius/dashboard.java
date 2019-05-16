@@ -28,7 +28,6 @@ public class dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_dashboard);
 
-
         actionBar = getSupportActionBar();
         actionBar.setTitle("Profile");
 
