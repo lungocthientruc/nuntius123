@@ -1,6 +1,7 @@
 package com.ttcnpm.nuntius;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -57,6 +58,8 @@ public class HomeFragment extends Fragment {
         if(id == R.id.action_logout) {
             firebaseAuth.signOut();
 
+            Intent intent = new Intent(getActivity(),Splash_Screen.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
