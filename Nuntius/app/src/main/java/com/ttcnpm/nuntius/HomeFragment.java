@@ -107,19 +107,23 @@ public class HomeFragment extends Fragment {
                         if (user.getUid().equals(id)){
                             if (mUsers.size()!=0)
                             {
-                                for (ModelUsers userl: mUsers){
-                                    if (!user.getUid().equals(userl.getUid()))
+                                boolean k = true;
+                                for (int i=0;i< mUsers.size();i++){
+                                    if (user.getUid().equals(mUsers.get(i).getUid()))
                                     {
-                                        mUsers.add(user);
+                                        k = false;
+                                        break;
                                     }
                                 }
-                            }
+                                if (k==true) mUsers.add(user);
+                            }else {mUsers.add(user);}
                         }
 
                     }
-                    adapterUsers = new AdapterUsers(getActivity(), mUsers);
-                    recyclerView.setAdapter(adapterUsers);
+
                 }
+                adapterUsers = new AdapterUsers(getActivity(), mUsers);
+                recyclerView.setAdapter(adapterUsers);
             }
 
             @Override
