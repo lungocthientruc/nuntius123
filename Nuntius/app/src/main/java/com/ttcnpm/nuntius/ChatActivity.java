@@ -156,17 +156,17 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chatList.clear();
-                for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    ModelChat chat =ds.getValue(ModelChat.class);
-                    if (chat.getReceiver().equals(hisUid)&& chat.getSender().equals(myUid)||
-                        chat.getReceiver().equals(hisUid)&& chat.getReceiver().equals(myUid)){
-                            chatList.add(chat);
-                        }
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    ModelChat chat = ds.getValue(ModelChat.class);
+                    if (chat.getReceiver().equals(hisUid) && chat.getSender().equals(myUid) ||
+                            chat.getReceiver().equals(myUid) && chat.getSender().equals(hisUid)) {
+                        chatList.add(chat);
                     }
-                    adapterChat = new AdapterChat(ChatActivity.this,chatList,hisImage);
+
+                    adapterChat = new AdapterChat(ChatActivity.this, chatList, hisImage);
                     adapterChat.notifyDataSetChanged();
                     recyclerView.setAdapter(adapterChat);
-
+                }
                 }
 
             @Override
