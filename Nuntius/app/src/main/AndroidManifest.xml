@@ -37,6 +37,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login_Screen" />
+        <activity android:name=".Change_Password" />
         <activity android:name=".Register_Screen" />
     </application>
 

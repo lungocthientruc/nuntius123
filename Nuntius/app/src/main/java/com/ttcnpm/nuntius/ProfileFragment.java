@@ -29,6 +29,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,6 +75,7 @@ public class ProfileFragment extends Fragment {
     // path where images of user profile and cover will be storaged
     String storagePath = "Users_Profile_Cover_Imgs/";
 
+    Button btnchangepass;
 
     ImageView avatarIv, coverIv;
     TextView nameTv,statusTv,emailTv,phoneTv,genderTv,cityTv;
@@ -120,6 +122,14 @@ public class ProfileFragment extends Fragment {
         cameraPermissions = new String[] {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+        btnchangepass = (Button) view.findViewById(R.id.btn_change_pass);
+        btnchangepass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (getActivity(),Change_Password.class);
+                startActivity(intent);
+            }
+        });
 
         //init views
 
