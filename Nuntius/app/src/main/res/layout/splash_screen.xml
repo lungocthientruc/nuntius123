@@ -26,18 +26,23 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="0.75"
+            android:background="@drawable/background_button"
             android:text="@string/register"
             android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
             android:visibility="visible" />
 
         <Button
             android:id="@+id/btnDangNhap"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="136dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="0.75"
-            android:textSize="20sp"
+            android:background="@drawable/background_button"
             android:text="@string/login"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
             android:visibility="visible" />
 
     </LinearLayout>
