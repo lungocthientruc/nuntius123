@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment {
 
     FirebaseAuth firebaseAuth;
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -57,7 +58,6 @@ public class HomeFragment extends Fragment {
         int id = item.getItemId();
         if(id == R.id.action_logout) {
             firebaseAuth.signOut();
-
             Intent intent = new Intent(getActivity(),Splash_Screen.class);
             startActivity(intent);
         }
