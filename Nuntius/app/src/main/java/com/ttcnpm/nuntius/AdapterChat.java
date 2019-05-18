@@ -28,6 +28,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
     List<ModelChat> chatList;
     String imageUrl;
 
+
     FirebaseUser fUser;
 
     public AdapterChat(Context context, List<ModelChat> chatList, String imageUrl){
@@ -54,7 +55,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
         String time = chatList.get(i).getTime();
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(time));
-        String dateTime = DateFormat.format("dd/MM/yyyy hh:mm ",cal).toString();
+        String dateTime = DateFormat.format("dd/MM/yyyy kk:mm ",cal).toString();
 
         myholder.messageTv.setText(message);
         myholder.timeTv.setText(dateTime);
@@ -91,13 +92,13 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
-        ImageView profileIv;
         TextView messageTv, timeTv, isSeenTv;
+        ImageView profileIv;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
-            profileIv = itemView.findViewById(R.id.profileIv);
+            profileIv = itemView.findViewById(R.id.avatarIv);
             messageTv = itemView.findViewById(R.id.messageTv);
             timeTv = itemView.findViewById(R.id.timeTv);
             isSeenTv = itemView.findViewById(R.id.isSeenTv);
