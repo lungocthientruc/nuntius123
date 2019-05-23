@@ -21,15 +21,18 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Person_Profile extends AppCompatActivity {
 
     ImageView avatarIv, coverIv;
     TextView nameTv, statusTv, emailTv, phoneTv, genderTv, cityTv;
     Button btnsendrequest, btndeclinerequest;
 
-    private DatabaseReference FriendRequestRef, UserRef;
+    private DatabaseReference FriendRequestRef, UserRef, FriendsRef;
     private FirebaseAuth mAuth;
-    private String senderUserid, receiverUserid, CURRENT_STATE;
+    private String senderUserid, receiverUserid, CURRENT_STATE, saveCurrentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class Person_Profile extends AppCompatActivity {
         //  receiverUserid =  getIntent().getExtras().get("visit_user_id").toString();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         FriendRequestRef = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
-
+        FriendsRef = FirebaseDatabase.getInstance().getReference().child("Friends");
         //init views
         avatarIv = (ImageView) findViewById(R.id.personavatarIv);
         nameTv = (TextView) findViewById(R.id.personnameTV);
@@ -119,12 +122,65 @@ public class Person_Profile extends AppCompatActivity {
                     if (CURRENT_STATE.equals("request_sent")){
                         CancelFriendRequest();
                     }
+                    if (CURRENT_STATE.equals("request_received")){
+                        AcceptFriendRequest();
+                    }
                 }
             });
         }else {
             btndeclinerequest.setVisibility(View.INVISIBLE);
             btnsendrequest.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void AcceptFriendRequest() {
+        Calendar calforDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+        saveCurrentDate = currentDate.format(calforDate.getTime());
+
+        FriendsRef.child(senderUserid).child(receiverUserid).child("date").setValue(saveCurrentDate)
+          .addOnCompleteListener(new OnCompleteListener<Void>() {
+              @Override
+              public void onComplete(@NonNull Task<Void> task) {
+                  if (task.isSuccessful()){
+                      FriendsRef.child(receiverUserid).child(senderUserid).child("date").setValue(saveCurrentDate)
+                              .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                  @Override
+                                  public void onComplete(@NonNull Task<Void> task) {
+                                      if (task.isSuccessful()){
+                                          FriendRequestRef.child(senderUserid).child(receiverUserid)
+                                                  .removeValue()
+                                                  .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                      @Override
+                                                      public void onComplete(@NonNull Task<Void> task) {
+                                                          if (task.isSuccessful())
+                                                          {
+                                                              FriendRequestRef.child(receiverUserid).child(senderUserid)
+                                                                      .removeValue()
+                                                                      .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                          @Override
+                                                                          public void onComplete(@NonNull Task<Void> task) {
+                                                                              if (task.isSuccessful()){
+                                                                                  btnsendrequest.setEnabled(true);
+                                                                                  CURRENT_STATE ="friends";
+                                                                                  btnsendrequest.setText("Hủy kết bạn");
+
+                                                                                  btndeclinerequest.setVisibility(View.INVISIBLE);
+                                                                                  btndeclinerequest.setEnabled(false);
+                                                                              }
+                                                                          }
+                                                                      });
+                                                          }
+                                                      }
+                                                  });
+
+                                      }
+                                  }
+                              });
+
+                  }
+              }
+          });
     }
 
     private void CancelFriendRequest() {
@@ -168,6 +224,14 @@ public class Person_Profile extends AppCompatActivity {
                                 btnsendrequest.setText("Hủy lời mời kết bạn");
                                 btndeclinerequest.setVisibility(View.INVISIBLE);
                                 btndeclinerequest.setEnabled(false);
+                            }
+                            else if (request_type.equals("received"))
+                            {
+                                CURRENT_STATE = "request_received";
+                                btnsendrequest.setText("Chấp nhận lời mời kết bạn");
+                                btndeclinerequest.setVisibility(View.VISIBLE);
+                                btndeclinerequest.setEnabled(true);
+
                             }
                         }
                     }
