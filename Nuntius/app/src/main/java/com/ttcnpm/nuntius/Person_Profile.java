@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,12 +24,12 @@ import com.squareup.picasso.Picasso;
 public class Person_Profile extends AppCompatActivity {
 
     ImageView avatarIv, coverIv;
-    TextView nameTv,statusTv,emailTv,phoneTv,genderTv,cityTv;
-    Button btnsendrequest,btndeclinerequest;
+    TextView nameTv, statusTv, emailTv, phoneTv, genderTv, cityTv;
+    Button btnsendrequest, btndeclinerequest;
 
-    private DatabaseReference profileUserRef,UserRef;
+    private DatabaseReference FriendRequestRef, UserRef;
     private FirebaseAuth mAuth;
-    private String senderUserid, receiverUserid;
+    private String senderUserid, receiverUserid, CURRENT_STATE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +39,26 @@ public class Person_Profile extends AppCompatActivity {
         Intent intent = getIntent();
         receiverUserid = intent.getStringExtra("visit_user_id");
 
+
         mAuth = FirebaseAuth.getInstance();
-      //  receiverUserid =  getIntent().getExtras().get("visit_user_id").toString();
+        senderUserid = mAuth.getCurrentUser().getUid();
+        //  receiverUserid =  getIntent().getExtras().get("visit_user_id").toString();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        FriendRequestRef = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
 
         //init views
         avatarIv = (ImageView) findViewById(R.id.personavatarIv);
         nameTv = (TextView) findViewById(R.id.personnameTV);
-        statusTv =(TextView)findViewById(R.id.personstatusTv);
+        statusTv = (TextView) findViewById(R.id.personstatusTv);
         emailTv = (TextView) findViewById(R.id.personemailTv);
-        phoneTv = (TextView)findViewById(R.id.personphoneTv);
-        genderTv = (TextView)findViewById(R.id.persongenderTv);
-        cityTv = (TextView)findViewById(R.id.personcityTv);
-        coverIv = (ImageView)findViewById(R.id.personcoverIv);
+        phoneTv = (TextView) findViewById(R.id.personphoneTv);
+        genderTv = (TextView) findViewById(R.id.persongenderTv);
+        cityTv = (TextView) findViewById(R.id.personcityTv);
+        coverIv = (ImageView) findViewById(R.id.personcoverIv);
         btnsendrequest = (Button) findViewById(R.id.btn_send_friend_request);
         btndeclinerequest = (Button) findViewById(R.id.btn_decline_friend_request);
 
+        CURRENT_STATE = "not_friends";
 
         Query userQuery = UserRef.orderByChild("uid").equalTo(receiverUserid);
 
@@ -88,15 +95,116 @@ public class Person_Profile extends AppCompatActivity {
                     } catch (Exception e) {
 
                     }
+                    MaintainanceofButtons();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
+        btndeclinerequest.setVisibility(View.INVISIBLE);
+        btndeclinerequest.setEnabled(false);
 
+        if (!senderUserid.equals(receiverUserid)) {
+            btnsendrequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnsendrequest.setEnabled(false);
+                    if (CURRENT_STATE.equals("not_friends")){
+                        SendFriendRequestToaPerson();
+                    }
+                    if (CURRENT_STATE.equals("request_sent")){
+                        CancelFriendRequest();
+                    }
+                }
+            });
+        }else {
+            btndeclinerequest.setVisibility(View.INVISIBLE);
+            btnsendrequest.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void CancelFriendRequest() {
+        FriendRequestRef.child(senderUserid).child(receiverUserid)
+                .removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                        {
+                            FriendRequestRef.child(receiverUserid).child(senderUserid)
+                                    .removeValue()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                btnsendrequest.setEnabled(true);
+                                                CURRENT_STATE ="not_friends";
+                                                btnsendrequest.setText("Gửi lời mời kết bạn");
+
+                                                btndeclinerequest.setVisibility(View.INVISIBLE);
+                                                btndeclinerequest.setEnabled(false);
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
 
     }
+
+    private void MaintainanceofButtons() {
+        FriendRequestRef.child(senderUserid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(receiverUserid)){
+                            String request_type = dataSnapshot.child(receiverUserid).child("request_type").getValue().toString();
+                            if (request_type.equals("sent")){
+                                CURRENT_STATE = "request_sent";
+                                btnsendrequest.setText("Hủy lời mời kết bạn");
+                                btndeclinerequest.setVisibility(View.INVISIBLE);
+                                btndeclinerequest.setEnabled(false);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void SendFriendRequestToaPerson() {
+        FriendRequestRef.child(senderUserid).child(receiverUserid)
+                .child("request_type").setValue("sent")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                        {
+                            FriendRequestRef.child(receiverUserid).child(senderUserid)
+                                    .child("request_type").setValue("received")
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                btnsendrequest.setEnabled(true);
+                                                CURRENT_STATE ="request_sent";
+                                                btnsendrequest.setText("Hủy lời mời kết bạn");
+
+                                                btndeclinerequest.setVisibility(View.INVISIBLE);
+                                                btndeclinerequest.setEnabled(false);
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
 }
