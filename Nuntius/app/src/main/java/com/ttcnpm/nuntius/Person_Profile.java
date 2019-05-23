@@ -45,6 +45,7 @@ public class Person_Profile extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         senderUserid = mAuth.getCurrentUser().getUid();
+        //  receiverUserid =  getIntent().getExtras().get("visit_user_id").toString();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         FriendRequestRef = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
         FriendsRef = FirebaseDatabase.getInstance().getReference().child("Friends");
@@ -124,45 +125,12 @@ public class Person_Profile extends AppCompatActivity {
                     if (CURRENT_STATE.equals("request_received")){
                         AcceptFriendRequest();
                     }
-                    if (CURRENT_STATE.equals("friends")){
-                        UnfriendAnFriend();
-                    }
                 }
             });
         }else {
             btndeclinerequest.setVisibility(View.INVISIBLE);
             btnsendrequest.setVisibility(View.INVISIBLE);
         }
-    }
-
-    private void UnfriendAnFriend() {
-        FriendsRef.child(senderUserid).child(receiverUserid)
-                .removeValue()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                        {
-                            FriendsRef.child(receiverUserid).child(senderUserid)
-                                    .removeValue()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
-                                                btnsendrequest.setEnabled(true);
-                                                CURRENT_STATE ="not_friends";
-                                                btnsendrequest.setText("Gửi lời mời kết bạn");
-
-                                                btndeclinerequest.setVisibility(View.INVISIBLE);
-                                                btndeclinerequest.setEnabled(false);
-                                            }
-                                        }
-                                    });
-                        }
-                    }
-                });
-
-
     }
 
     private void AcceptFriendRequest() {
@@ -197,17 +165,8 @@ public class Person_Profile extends AppCompatActivity {
                                                                                   CURRENT_STATE ="friends";
                                                                                   btnsendrequest.setText("Hủy kết bạn");
 
-                                                                                  btndeclinerequest.setVisibility(View.VISIBLE);
-                                                                                  btndeclinerequest.setEnabled(true);
-                                                                                  btndeclinerequest.setText("Gửi tin nhắn");
-                                                                                  btndeclinerequest.setOnClickListener(new View.OnClickListener() {
-                                                                                      @Override
-                                                                                      public void onClick(View v) {
-                                                                                          Intent intent = new Intent(Person_Profile.this,ChatActivity.class);
-                                                                                          intent.putExtra("hisUid", receiverUserid);
-                                                                                          startActivity(intent);
-                                                                                      }
-                                                                                  });
+                                                                                  btndeclinerequest.setVisibility(View.INVISIBLE);
+                                                                                  btndeclinerequest.setEnabled(false);
                                                                               }
                                                                           }
                                                                       });
@@ -273,43 +232,7 @@ public class Person_Profile extends AppCompatActivity {
                                 btndeclinerequest.setVisibility(View.VISIBLE);
                                 btndeclinerequest.setEnabled(true);
 
-                                btndeclinerequest.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        CancelFriendRequest();
-                                    }
-                                });
-
                             }
-                        }
-                        else {
-                            FriendsRef.child(senderUserid)
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.hasChild(receiverUserid)){
-                                                CURRENT_STATE = "friends";
-                                                btnsendrequest.setText("Hủy kết bạn");
-
-                                                btndeclinerequest.setVisibility(View.VISIBLE);
-                                                btndeclinerequest.setEnabled(true);
-                                                btndeclinerequest.setText("Gửi tin nhắn");
-                                                btndeclinerequest.setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Intent intent = new Intent(Person_Profile.this,ChatActivity.class);
-                                                        intent.putExtra("hisUid", receiverUserid);
-                                                        startActivity(intent);
-                                                    }
-                                                });
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
                         }
                     }
 
