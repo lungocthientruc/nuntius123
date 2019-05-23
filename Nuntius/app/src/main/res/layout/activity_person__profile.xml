@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/coverIv"
+                android:id="@+id/personcoverIv"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_alignParentLeft="false"
@@ -38,7 +38,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/avatarIv"
+                    android:id="@+id/personavatarIv"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_marginStart="25dp"
@@ -53,7 +53,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/nameTV"
+                        android:id="@+id/personnameTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -63,7 +63,7 @@
                         android:textSize="25sp" />
 
                     <TextView
-                        android:id="@+id/statusTv"
+                        android:id="@+id/personstatusTv"
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -78,14 +78,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="392dp"
-                android:layout_height="387dp"
+                android:layout_width="match_parent"
+                android:layout_height="393dp"
                 android:layout_marginTop="200dp"
                 android:orientation="vertical"
                 android:weightSum="20">
 
                 <TextView
-                    android:id="@+id/emailTv"
+                    android:id="@+id/personemailTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
@@ -97,7 +97,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/genderTv"
+                    android:id="@+id/persongenderTv"
                     android:layout_width="391dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
@@ -109,7 +109,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/phoneTv"
+                    android:id="@+id/personphoneTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
@@ -121,7 +121,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/cityTv"
+                    android:id="@+id/personcityTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
@@ -132,20 +132,45 @@
                     android:text="Thành phố"
                     android:textSize="15sp" />
 
-                <Button
-                    android:id="@+id/btn_change_pass"
-                    android:layout_width="133dp"
-                    android:layout_height="46dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="3"
-                    android:background="@drawable/background_button"
-                    android:text="Đổi mật khẩu"
-                    android:textColor="@color/colorPrimary" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/btn_send_friend_request"
+                        android:layout_width="133dp"
+                        android:layout_height="46dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/background_button"
+                        android:text="Gửi lời mời kết bạn"
+                        android:textColor="@color/colorPrimary" />
+
+
+                    <Button
+                        android:id="@+id/btn_decline_friend_request"
+                        android:layout_width="133dp"
+                        android:layout_height="46dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_button"
+                        android:text="Từ chối lời mời kết bạn"
+                        android:textColor="@color/colorPrimary" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -155,15 +180,6 @@
 
 
     </ScrollView>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:src="@drawable/ic_edit_white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            android:layout_alignParentRight="true"/>
 
 
 
