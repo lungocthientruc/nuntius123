@@ -22,9 +22,8 @@
             android:src="@drawable/ic_default"
             android:background="@color/colorPrimaryDark"
             />
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="20dp"
@@ -49,7 +48,12 @@
                 android:textStyle="bold"/>
 
         </LinearLayout>
-
+        <ImageButton
+            android:id="@+id/vcallBtn"
+            android:background="@color/colorAccent"
+            android:src="@drawable/btn_video"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView

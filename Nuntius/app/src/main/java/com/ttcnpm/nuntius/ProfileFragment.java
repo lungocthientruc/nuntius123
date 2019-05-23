@@ -57,8 +57,6 @@ import java.security.Key;
 import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Intent.getIntent;
-import static android.content.Intent.getIntentOld;
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 
@@ -82,7 +80,6 @@ public class ProfileFragment extends Fragment {
     ImageView avatarIv, coverIv;
     TextView nameTv,statusTv,emailTv,phoneTv,genderTv,cityTv;
     FloatingActionButton fab;
-
 
     //progress dialog
     ProgressDialog pd;
@@ -118,9 +115,6 @@ public class ProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
-
-
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Users");
         storageReference = getInstance().getReference();
@@ -138,6 +132,7 @@ public class ProfileFragment extends Fragment {
         });
 
         //init views
+
         avatarIv = view.findViewById(R.id.avatarIv);
         nameTv = view.findViewById(R.id.nameTV);
         statusTv = view.findViewById(R.id.statusTv);
@@ -191,7 +186,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
         // fab button click
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

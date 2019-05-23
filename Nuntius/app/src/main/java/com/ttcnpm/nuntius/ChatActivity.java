@@ -41,6 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     TextView nameTv, userStatusTv;
     EditText messageEt;
     ImageButton sendBtn;
+    ImageButton vcallBtn;
     ValueEventListener seenListener;
     DatabaseReference userRefForSeen;
     List<ModelChat> chatList;
@@ -68,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
         userStatusTv = findViewById(R.id.userStatusTv);
         messageEt = findViewById(R.id.messageEt);
         sendBtn = findViewById(R.id.sendBtn);
+        vcallBtn = findViewById(R.id.vcallBtn);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
@@ -119,7 +121,13 @@ public class ChatActivity extends AppCompatActivity {
 
                     sendMessage(message);
                 }
-
+            }
+        });
+        vcallBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatActivity.this,CallActivity.class);
+                startActivity(intent);
             }
         });
         readMessage();
