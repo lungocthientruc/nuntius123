@@ -57,9 +57,13 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
             @Override
             public  void onClick(View v){
 
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("hisUid", hisUID);
+                Intent intent = new Intent(context, Person_Profile.class);
+                intent.putExtra("visit_user_id", hisUID);
                 context.startActivity(intent);
+                /*String visit_user_id = hisUID;
+               Intent profileIntent = new Intent(context,ProfileFragment.class);
+               profileIntent.putExtra("visit_user_id",visit_user_id);
+               context.startActivity(profileIntent);*/
             }
         });
     }
