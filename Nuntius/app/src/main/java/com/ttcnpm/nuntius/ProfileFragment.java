@@ -57,6 +57,8 @@ import java.security.Key;
 import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Intent.getIntent;
+import static android.content.Intent.getIntentOld;
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 
