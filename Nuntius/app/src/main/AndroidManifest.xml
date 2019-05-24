@@ -24,6 +24,7 @@
              android:theme="@style/AppTheme.DarkActionBar"
                 >
         </activity>
+        <activity android:name=".Person_Profile"></activity>
         <activity
             android:name=".dashboard"
             android:label="Nuntius"
