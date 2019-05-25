@@ -89,6 +89,7 @@ public class Register_Screen extends Activity {
                                 hashMap.put("email",email);
                                 hashMap.put("uid",uid);
                                 hashMap.put("name","");
+                                hashMap.put("onlineStatus","online");
                                 hashMap.put("status","");
                                 hashMap.put("phone","");
                                 hashMap.put("image","");
